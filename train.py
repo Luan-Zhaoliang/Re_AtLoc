@@ -30,7 +30,7 @@ from torch.autograd import Variable
 # 配置运行环境
 opt = Options().parse()  # 参数命令解析
 cuda = torch.cuda.is_available()  # 判断是否有可用gpu设备
-device = "cuda" + ",".join(str(i) for i in opt.gpus) if cuda else "cpu"  # 获取gpu或cpu设备信息
+device = "cuda:" + ",".join(str(i) for i in opt.gpus) if cuda else "cpu"  # 获取gpu或cpu设备信息
 logfile = osp.join(opt.runs_dir, 'log.txt')  # 存储运行日志文件
 stdout = Logger(logfile)
 print('Logging to {:s}'.format(logfile))
@@ -43,7 +43,7 @@ if opt.model == 'AtLoc':
     model = atloc
     train_criterion = AtLocCriterion(saq=opt.beta, learn_beta=True)  # 模型训练集误差计算
     val_criterion = AtLocCriterion()  # 模型验证集误差计算
-    param_list = [{'param': model.parameters()}]  # 获取模型训练的参数集合
+    param_list = [{'params': model.parameters()}]  # 获取模型训练的参数集合
 else:
     raise NotImplementedError
 

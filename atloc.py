@@ -39,7 +39,7 @@ class AtLoc(nn.Module):
             if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
                 nn.init.kaiming_normal_(m.weight.data)  # kaiming正态分布初始化
                 if m.bias is not None:
-                    nn.init.constant_(m.bias, 0)  # 常数初始化
+                    nn.init.constant_(m.bias.data, 0)  # 常数初始化
 
     def forward(self, x):
         x = self.feature_extractor(x)
